@@ -11,4 +11,4 @@ different to dijikstras as it doesnt use a prioritu queue, instead it only uses 
 
 The edittable version of this diagram is https://drive.google.com/drive/u/0/folders/17BZR3Xwj1KUfS7JRQMdkAfqYfLLCY4VZ?ths=true: 
 
-![alt text](https://linktoimage)
+![alt text](https://github.com/unitier3/busRoutes/blob/diagram/images/busRoutes.png)
