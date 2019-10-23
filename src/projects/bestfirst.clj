@@ -23,8 +23,6 @@
         cost (:cost state)]
     (for [{loc :location cos :cost} (busRoutes (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
 
-;; (A*search {:state "newcastle" :cost 0} "chester" a*lmgB)
-
 (defn allStations []
   "calling this function returns
   the count of all stations which can be visited."
@@ -62,6 +60,8 @@
          (best-firstSearchA (first (sort-by :cost (removeBeenValues (lmg state) been))) goal lmg (conj been (:state state)))))))
 
 ;;(best-firstSearchA {:state "newcastle" :cost 0} "chester" bestFirstLMG)
+;;Find out Elapsed time for best-firstSearchA to run:
+;;(time (best-firstSearchA {:state "newcastle" :cost 0} "chester" bestFirstLMG))
 
 (defn best-firstSearchB
   "this function is an attempt to improve the previous function
@@ -81,3 +81,5 @@
            (for [x [(sort-by :cost (removeBeenValues (lmg state) been))]] (best-firstSearchB x goal lmg (conj been (:state state)))) )))))
 
 ;;(best-firstSearchB {:state "newcastle" :cost 0} "chester" bestFirstLMG)
+;;Find out Elapsed time for best-firstSearchB to run:
+;;(time (best-firstSearchB {:state "newcastle" :cost 0} "chester" bestFirstLMG))
