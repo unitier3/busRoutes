@@ -17,12 +17,12 @@
     :liverpool ( {:location "warrington" :cost 2} {:location "manchester" :cost 7} {:location "chester" :cost 4})
     })
 
-(defn a*lmgB [state]
+(defn A*lmg [state]
   (let [location (:state state)
         cost (:cost state)]
     (for [{loc :location cos :cost} (busRoutes (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
 
-;; (A*search {:state "newcastle" :cost 0} "chester" a*lmgB)
+;; (A*search {:state "newcastle" :cost 0} "chester" A*lmg)
 
 
 
