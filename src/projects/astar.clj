@@ -23,6 +23,9 @@
     (for [{loc :location cos :cost} (busRoutes (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
 
 ;; (A*search {:state "newcastle" :cost 0} "chester" a*lmgB)
+;; Find out Elapsed time for A*search to run:
+;; (time (A*search {:state "newcastle" :cost 0} "chester" a*lmgB))
+
 
 
 

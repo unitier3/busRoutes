@@ -17,12 +17,10 @@
     :liverpool ( {:location "warrington" :cost 2} {:location "manchester" :cost 7} {:location "chester" :cost 4})
     })
 
-(defn a*lmgB [state]
+(defn lmgB [state]
   (let [location (:state state)
         cost (:cost state)]
     (for [{loc :location cos :cost} (busRoutes (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
-
-;; (A*search {:state "newcastle" :cost 0} "chester" a*lmgB)
 
 (defn allStations []
   (count (set (flatten (for [x busRoutes] (for [{loc :location cos :cost} (second x) ] loc))))))
@@ -49,7 +47,9 @@
      (do (println state)
          (best-firstSearchA (first (sort-by :cost (removeBeenValues (lmg state) been))) goal lmg (conj been (:state state)))))))
 
-;;(best-firstSearchA {:state "newcastle" :cost 0} "chester" a*lmgB)
+;; (best-firstSearchA {:state "newcastle" :cost 0} "chester" lmgB)
+;; Find out Elapsed time for best-firstSearchA to run:
+;; (time (best-firstSearchA {:state "newcastle" :cost 0} "chester" lmgB))
 
 (defn best-firstSearchB
   ([state goal lmg]
@@ -65,4 +65,6 @@
          (or
            (for [x [(sort-by :cost (removeBeenValues (lmg state) been))]] (best-firstSearchB x goal lmg (conj been (:state state)))) )))))
 
-;;(best-firstSearchB {:state "newcastle" :cost 0} "chester" a*lmgB)
+;; (best-firstSearchB {:state "newcastle" :cost 0} "chester" lmgB)
+;; Find out Elapsed time for best-firstSearchB to run:
+;; (time (best-firstSearchB {:state "newcastle" :cost 0} "chester" lmgB))
