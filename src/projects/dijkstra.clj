@@ -16,13 +16,20 @@
         cost (:cost state)]
     (for [{loc :location cos :cost} (busRoutes2 (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
 
-(defn allStations []
-  "calling this function returns
-  the count of all stations which can be visited."
-  (count (set (flatten (for [x busRoutes2] (for [{loc :location cos :cost} (second x) ] loc))))))
+(defn removeBeenValues [states toRemove]
+  "after using the legal move generator
+  you can pass the result to this function
+  to remove stations you have already visited."
+  (remove nil? (for [ {state :state cos :cost} states] (if (some #(= state %)toRemove) nil (hash-map :cost cos :state state)))))
 
-(defn dijkstra [state goal lmg]
-  (cond
-    (= (state :loc) goal) true
-    :else false
-    ))
+(defn dijkstra
+  ([state goal lmg]
+   (dijkstra state goal lmg []))
+  ([state goal lmg visited]
+   (cond
+     (= (:state state) goal) (do (println state "- FOUND IT M8") state)
+     (empty? (removeBeenValues (lmgB state) visited)) (do (println state "- no options") false)
+     :else
+        (do (println state) (for [currentState (removeBeenValues (sort-by :cost (lmg state)) visited)] (dijkstra currentState goal lmg (conj visited (:state currentState))))
+     ))))
+
