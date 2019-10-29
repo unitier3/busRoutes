@@ -28,6 +28,6 @@
      (do (println state)
          (depth-firstSearch (first (removeBeenValues (lmg map state) been)) goal lmg map (conj been (:state state)))))))
 
-;;(depth-firstSearch {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes01)
+;;(depth-firstSearch {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;;Find out Elapsed time for best-firstSearchA to run:
-;;(time (depth-firstSearch {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes01))
+;;(time (depth-firstSearch {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
