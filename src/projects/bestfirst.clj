@@ -28,9 +28,9 @@
      (do (println state)
          (best-firstSearchA (first (sort-by :cost (removeBeenValues (lmg map state) been))) goal lmg map (conj been (:state state)))))))
 
-;;(best-firstSearchA {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes)
+;;(best-firstSearchA {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;;Find out Elapsed time for best-firstSearchA to run:
-;;(time (best-firstSearchA {:state "newcastle" :cost 0} "chester" bestFirstLMG))
+;;(time (best-firstSearchA {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
 
 (defn best-firstSearchB
   "this function is an attempt to improve the previous function
@@ -49,6 +49,6 @@
          (or
            (flatten (for [x (sort-by :cost (removeBeenValues (lmg map state) been))] (best-firstSearchB x goal lmg map (conj been (:state state))))))))))
 
-;;(best-firstSearchB {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes)
+;;(best-firstSearchB {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;;Find out Elapsed time for best-firstSearchB to run:
-;;(time (best-firstSearchB {:state "newcastle" :cost 0} "chester" bestFirstLMG))
+;;(time (best-firstSearchB {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
