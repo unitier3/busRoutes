@@ -17,10 +17,22 @@
    (dijkstra state (:state state) goal lmg map [] [] []))
   ([state start goal lmg map been currentRoute bestRoute]
    (cond
+     (and (empty? (removeBeenValues (lmg map state) been)) (= start (:state state)))
+       false
+
      (= (:state state) goal)
-       (sort-by :cost currentRoute)
+     (do
+       (println state " - GOAL")
+       (dijkstra
+         {:state (last been) :cost (- (state :cost) (fixPrice map (:state state) (last been)))}
+         start goal lmg map
+         (conj been (:state state))
+         []
+         (sort-by :cost currentRoute)))
+
      (= (count (set been)) (allStations map))
        false
+
      (empty? (removeBeenValues (lmg map state) been))
        (do
          (println state " - FAIL")
@@ -30,6 +42,7 @@
            (conj been (:state state))
            currentRoute
            bestRoute))
+
      :else
        (do
          (println state)
