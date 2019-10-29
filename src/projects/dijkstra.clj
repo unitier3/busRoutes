@@ -14,27 +14,31 @@
   between two locations through many locations
   with different possible costs - using the best first search algorithm"
   ([state goal lmg map]
-   (dijkstra state (:state state) goal lmg map [] [] [] []))
-  ([state start goal lmg map bestRoute currentRoute allRoutes been]
+   (dijkstra state (:state state) goal lmg map [] [] []))
+  ([state start goal lmg map been currentRoute bestRoute]
    (cond
-     (and (empty? (removeBeenValues (lmg map state) been)) (= (:state state) start)) allRoutes
-     (= (:state state) goal )
-       (do
-         (conj currentRoute state)
-         (dijkstra
-           {:state (last been) :cost (- (state :cost) (fixPrice map (:state state) (last been)))}
-           start goal lmg map currentRoute [] (conj currentRoute allRoutes) (conj been (:state state))))
-     (= (count (set been)) (allStations map)) false
+     (= (:state state) goal)
+       (sort-by :cost currentRoute)
+     (= (count (set been)) (allStations map))
+       false
      (empty? (removeBeenValues (lmg map state) been))
-     (do
-       (println state " - FAIL")
+       (do
+         (println state " - FAIL")
          (dijkstra
            {:state (last been) :cost (- (state :cost) (fixPrice map (:state state) (last been)))}
-           start goal lmg map bestRoute currentRoute allRoutes (conj been (:state state))))
+           start goal lmg map
+           (conj been (:state state))
+           currentRoute
+           bestRoute))
      :else
-     (do (println state)
-         (dijkstra (first (sort-by :cost (removeBeenValues (lmg map state) been)))
-                   start goal lmg map bestRoute (conj currentRoute state) allRoutes (conj been (:state state)))))))
+       (do
+         (println state)
+         (dijkstra
+           (first (sort-by :cost (removeBeenValues (lmg map state) been)))
+           start goal lmg map
+           (conj been (:state state))
+           (conj (into [] (set currentRoute)) state)
+           bestRoute)))))
 
 ;; (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;; (time (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
