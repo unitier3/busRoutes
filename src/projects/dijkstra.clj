@@ -10,49 +10,37 @@
 (use '[projects.scenarios :refer :all])
 
 (defn dijkstra
-  "you can use this function to find a cheap route
-  between two locations through many locations
-  with different possible costs - using the best first search algorithm"
   ([state goal lmg map]
-   (dijkstra state (:state state) goal lmg map [] [] []))
+   ;; (findCheapestVec(dijkstra state goal lmg map [] []))
+   (dijkstra state goal lmg map [] 10000000 []))
 
-  ([state start goal lmg map been currentRoute bestRoute]
+  ([state goal lmg map bestRoute score visited]
    (cond
-     (and (empty? (removeBeenValues (lmg map state) been)) (= start (:state state)))
-       false
+     (< score (:cost state))
+     (do (println state "this way is pointless, score: " score ) false)
 
      (= (:state state) goal)
-       (do
-         (println state " - GOAL")
-         (dijkstra
-           {:state (last been) :cost (- (state :cost) (fixPrice map (:state state) (last been)))}
-           start goal lmg map
-           (conj been (:state state))
-           []
-           (sort-by :cost currentRoute)))
+     (do
+       (println state "- FOUND IT M8")
+       (hash-map :route (conj bestRoute state)))
 
-     (= (count (set been)) (allStations map))
+     (empty? (removeBeenValues (lmg map state) visited))
        false
-
-     (empty? (removeBeenValues (lmg map state) been))
-       (do
-         (println state " - FAIL")
-         (dijkstra
-           {:state (last been) :cost (- (state :cost) (fixPrice map (:state state) (last been)))}
-           start goal lmg map
-           (conj been (:state state))
-           currentRoute
-           bestRoute))
 
      :else
        (do
          (println state)
-         (dijkstra
-           (first (sort-by :cost (removeBeenValues (lmg map state) been)))
-           start goal lmg map
-           (conj been (:state state))
-           (conj (into [] (set currentRoute)) state)
-           bestRoute)))))
+         (flatten
+           (remove false?
+               (for [currentState (removeBeenValues (sort-by :cost (lmg map state)) visited) ]
+                  (dijkstra
+                   currentState
+                   goal
+                   lmg
+                   map
+                   (conj bestRoute state)
+                   score
+                   (conj visited (:state currentState))))))))))
 
 ;; (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;; (time (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))

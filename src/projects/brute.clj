@@ -11,7 +11,7 @@
 
 (defn brute
   ([state goal lmg map]
-   (brute state goal lmg map [] []))
+   (findCheapestVec(brute state goal lmg map [] [])))
 
   ([state goal lmg map bestRoute visited]
    (cond
@@ -34,7 +34,6 @@
                map
                (conj bestRoute state)
                (conj visited (:state currentState)))))))))
-
 
 
 ;; (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)

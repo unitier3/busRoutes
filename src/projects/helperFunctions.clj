@@ -22,3 +22,6 @@
   price if we have to back track to a previous
   location we have already visited."
   (first (remove nil? (for [{loc :location cost :cost} (map (keyword previousLoc))] (if (= loc currentLoc) cost )))))
+
+(defn findCheapestVec [lis]
+  (reduce (fn [a b] (if (<(:cost (last a)) (:cost (last b))) a b )) (for [ {route :route } lis]  route)))
