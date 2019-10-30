@@ -24,6 +24,6 @@
      (flatten (remove false? (identity (for [currentState (removeBeenValues (sort-by :cost (lmg map state)) visited)]
                                          (brute currentState goal lmg map (conj bestRoute state) (conj visited (:state currentState))))))))))
 
-;; (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 
+;; (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;; (time (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
