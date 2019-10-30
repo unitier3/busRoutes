@@ -15,18 +15,34 @@
   with different possible costs - using the best first search algorithm"
   ([state goal lmg map]
    (best-firstSearchA state goal lmg map []))
+
   ([state goal lmg map been]
    (cond
      (= (:state state) goal )
-         (do (conj been (:state state)) state)
+       (do (conj been (:state state)) state)
+
      (= (count (set been)) (allStations map))
-         false
+       false
+
      (empty? (removeBeenValues (lmg map state) been))
-         (do (println state " - FAIL")
-             (best-firstSearchA {:state (last been) :cost (- (state :cost) (fixPrice map (:state state) (last been)))} goal lmg map (conj been (:state state))))
+       (do
+         (println state " - FAIL")
+         (best-firstSearchA
+           {:state (last been) :cost (- (state :cost) (fixPrice map (:state state) (last been)))}
+           goal
+           lmg
+           map
+           (conj been (:state state))))
+
      :else
-     (do (println state)
-         (best-firstSearchA (first (sort-by :cost (removeBeenValues (lmg map state) been))) goal lmg map (conj been (:state state)))))))
+       (do
+         (println state)
+         (best-firstSearchA
+           (first (sort-by :cost (removeBeenValues (lmg map state) been)))
+           goal
+           lmg
+           map
+           (conj been (:state state)))))))
 
 ;;(best-firstSearchA {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;;Find out Elapsed time for best-firstSearchA to run:
@@ -38,16 +54,30 @@
   but still has some issues yet to be resolved."
   ([state goal lmg map]
    (best-firstSearchB state goal lmg map []))
+
   ([state goal lmg map been]
    (cond
      (= (:state state) goal )
-     (do (conj been (:state state)) state)
-     (= (count (set been)) (allStations map) ) false
-     (empty? (removeBeenValues (lmg map state) been)) false
+       (do
+         (conj been (:state state)) state)
+
+     (= (count (set been)) (allStations map) )
+       false
+
+     (empty? (removeBeenValues (lmg map state) been))
+       false
+
      :else
-     (do (println state)
-         (or
-           (flatten (for [x (sort-by :cost (removeBeenValues (lmg map state) been))] (best-firstSearchB x goal lmg map (conj been (:state state))))))))))
+       (do
+         (println state)
+         (flatten
+           (for [x (sort-by :cost (removeBeenValues (lmg map state) been))]
+             (best-firstSearchB
+               x
+               goal
+               lmg
+               map
+               (conj been (:state state)))))))))
 
 ;;(best-firstSearchB {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
 ;;Find out Elapsed time for best-firstSearchB to run:
