@@ -11,7 +11,7 @@
 (defn A*lmg [state]
   (let [location (:state state)
         cost (:cost state)]
-    (for [{loc :location cos :cost} (busRoutes (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
+    (for [{loc :location cos :cost} (busRoutes11 (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
 
 ;;(A*search {:state "newcastle" :cost 0} "chester" A*lmg)
 ;;Find out Elapsed time for A*search to run:
