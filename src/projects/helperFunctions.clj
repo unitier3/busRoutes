@@ -25,3 +25,6 @@
 
 (defn findCheapestVec [lis]
   (reduce (fn [a b] (if (<(:cost (last a)) (:cost (last b))) a b )) (for [ {route :route } lis]  route)))
+
+(defn containsLocation [map location]
+  (contains? (set (flatten (for [x map] (for [{loc :location cos :cost} (second x) ] loc)))) location))
