@@ -11,19 +11,32 @@
 
 (defn brute
   ([state goal lmg map]
-   (brute state goal lmg map [] []))
+   (if
+     (not (containsLocation map goal))
+       (str "location not valid")
+       (findCheapestVec(brute state goal lmg map [] [])))
+   )
+
   ([state goal lmg map bestRoute visited]
    (cond
      (= (:state state) goal)
-     (do
-       (println state "- FOUND IT M8")
-       (hash-map :route (conj bestRoute state)))
+       (hash-map :route (conj bestRoute state))
+
      (empty? (removeBeenValues (lmg map state) visited))
-     false
+       false
+
      :else
-     (flatten (remove false? (identity (for [currentState (removeBeenValues (sort-by :cost (lmg map state)) visited)]
-                                         (brute currentState goal lmg map (conj bestRoute state) (conj visited (:state currentState))))))))))
+       (flatten
+         (remove false?
+           (for [currentState (removeBeenValues (sort-by :cost (lmg map state)) visited)]
+             (brute
+               currentState
+               goal
+               lmg
+               map
+               (conj bestRoute state)
+               (conj visited (:state currentState)))))))))
+
 
 ;; (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
-
 ;; (time (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))

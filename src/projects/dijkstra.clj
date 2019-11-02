@@ -11,15 +11,36 @@
 
 (defn dijkstra
   ([state goal lmg map]
-   (dijkstra state goal lmg map []))
-  ([state goal lmg map visited]
+   ;; (findCheapestVec(dijkstra state goal lmg map [] []))
+   (dijkstra state goal lmg map [] 10000000 []))
+
+  ([state goal lmg map bestRoute score visited]
    (cond
-     (= (:state state) goal) (do (println state "- FOUND IT M8") state)
-     (empty? (removeBeenValues (lmg map state) visited)) (do (println state "- no options") false)
+     (< score (:cost state))
+     (do (println state "this way is pointless, score: " score ) false)
+
+     (= (:state state) goal)
+     (do
+       (println state "- FOUND IT M8")
+       (hash-map :route (conj bestRoute state)))
+
+     (empty? (removeBeenValues (lmg map state) visited))
+       false
+
      :else
-        (do (println state) (for [currentState (removeBeenValues (sort-by :cost (lmg map state)) visited)] (dijkstra currentState goal lmg map (conj visited (:state currentState))))
-     ))))
+       (do
+         (println state)
+         (flatten
+           (remove false?
+               (for [currentState (removeBeenValues (sort-by :cost (lmg map state)) visited) ]
+                  (dijkstra
+                   currentState
+                   goal
+                   lmg
+                   map
+                   (conj bestRoute state)
+                   score
+                   (conj visited (:state currentState))))))))))
 
 ;; (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
-
 ;; (time (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
