@@ -11,9 +11,14 @@
 
 (defn brute
   ([state goal lmg map]
-   (if
+   (cond
      (not (containsLocation map goal))
-       (str "location not valid")
+       (str goal " is not a valid destination")
+
+     (not (containsStation map (:state state)))
+       (str (:state state) " is not a start location")
+
+     :else
        (findCheapestVec(brute state goal lmg map [] [])))
    )
 
@@ -28,7 +33,7 @@
      :else
        (flatten
          (remove false?
-           (for [currentState (removeBeenValues (sort-by :cost (lmg map state)) visited)]
+           (for [currentState (removeBeenValues (lmg map state) visited)]
              (brute
                currentState
                goal
