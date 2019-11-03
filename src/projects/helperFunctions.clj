@@ -6,7 +6,7 @@
         cost (:cost state)]
     (for [{loc :location cos :cost} (map (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
 
-(defn allStations [map]
+(defn allLocations [map]
   "calling this function returns
   the count of all stations which can be visited."
   (count (set (flatten (for [x map] (for [{loc :location cos :cost} (second x) ] loc))))))
@@ -24,7 +24,10 @@
   (first (remove nil? (for [{loc :location cost :cost} (map (keyword previousLoc))] (if (= loc currentLoc) cost )))))
 
 (defn findCheapestVec [lis]
-  (reduce (fn [a b] (if (<(:cost (last a)) (:cost (last b))) a b )) (for [ {route :route } lis]  route)))
+  (reduce (fn [a b] (if (<(:cost (last a)) (:cost (last b))) a b )) (for [ {route :route} lis]  route)))
 
 (defn containsLocation [map location]
   (contains? (set (flatten (for [x map] (for [{loc :location cos :cost} (second x) ] loc)))) location))
+
+(defn containsStation [map location]
+    (if ( = true (first (remove nil? (for [x map] (if ( = (name (first x)) location) true))))) true false))
