@@ -1,8 +1,6 @@
 (ns projects.scenarios)
 
-
 ;; routes by size:
-
 (def busRoutes01
   '{ :newcastle ({:location "middlesbrough" :cost 8} {:location "darlington" :cost 7} {:location "durham" :cost 6})
     :middlesbrough ({:location "redcar" :cost 2} {:location "hartlepool" :cost 2} {:location "northallerton" :cost 3} {:location "chester" :cost 6}{:location "newcastle" :cost 5} {:location "leeds" :cost 5})
@@ -68,9 +66,7 @@
       :liverpool ( {:location "warrington" :cost 2} {:location "manchester" :cost 7} {:location "chester" :cost 4})
 })
 
-
 ;; routes with dead ends:
-
 (def busRoutes11
   '{
     :newcastle ({:location "middlesbrough" :cost 1} {:location "darlington" :cost 2} {:location "durham" :cost 3} {:location "liverpool" :cost 4})
