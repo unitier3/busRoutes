@@ -101,11 +101,11 @@
 
 (def busRoutes13
   '{
-    :newcastle ({:location "middlesbrough" :cost 8}{:location "yarm" :cost 2} {:location "darlington" :cost 7} {:location "japan" :cost 2}{:location "durham" :cost 6} {:location "sunderland" :cost 4} )
+    :newcastle ({:location "middlesbrough" :cost 8}{:location "A1" :cost 2} {:location "darlington" :cost 7} {:location "japan" :cost 2}{:location "durham" :cost 6} {:location "sunderland" :cost 4} )
     :sunderland ({:location "darlington" :cost 5} {:location "newcastle" :cost 3} {:location "durham" :cost 4}  )
     :durham ({:location "darlington" :cost 3} {:location "newcastle" :cost 6} {:location "durham" :cost 4}   {:location "chesterlestreet" :cost 4} )
     :chesterlestreet   ({:location "darlington" :cost 3} {:location "newcastle" :cost 6})
-    :yarm ({:location "catterick" :cost 2})
+    :A1 ({:location "catterick" :cost 2})
     :catterick ({:location "richmond" :cost 2})
     :richmond ({:location "leyburn" :cost 2})
     :leyburn ({:location "bedale" :cost 2})

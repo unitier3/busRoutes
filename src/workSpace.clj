@@ -18,14 +18,14 @@
 ;;(A*search {:state "newcastle" :cost 0} "chester" A*lmg)
 ;;(time (A*search {:state "newcastle" :cost 0} "chester" A*lmg))
 
-;;(best-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes00)
-;;(time (best-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes00))
+;;(best-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes01)
+;;(time (best-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes01))
 
-;; (brute {:state "newcastle" :cost 0} "chester" busRoutes00)
-;; (time (brute {:state "newcastle" :cost 0} "chester" busRoutes00))
+;; (brute {:state "newcastle" :cost 0} "chester" busRoutes01)
+;; (time (brute {:state "newcastle" :cost 0} "chester" busRoutes01))
 
-;;(depth-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes00)
-;;(time (depth-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes00))
+;;(depth-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes01)
+;;(time (depth-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes01))
 
-;; (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes00)
-;; (time (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes00))
+;; (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes01)
+;; (time (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes01))
