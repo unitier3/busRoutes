@@ -12,7 +12,7 @@
 (defn A*lmg [state]
   (let [location (:state state)
         cost (:cost state)]
-    (for [{loc :location cos :cost} (busRoutes00 (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
+    (for [{loc :location cos :cost} (busRoutes03 (keyword location))]  (hash-map :cost (+ cos cost) :state loc))))
 
 
 ;;(A*search {:state "newcastle" :cost 0} "chester" A*lmg)
