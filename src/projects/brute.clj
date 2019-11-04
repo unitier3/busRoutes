@@ -10,7 +10,7 @@
 (use '[projects.scenarios :refer :all])
 
 (defn brute
-  ([state goal lmg map]
+  ([state goal map]
    (cond
      (not (containsLocation map goal))
        (str goal " is not a valid destination")
@@ -19,29 +19,28 @@
        (str (:state state) " is not a start location")
 
      :else
-       (findCheapestVec(brute state goal lmg map [] [])))
+       (findCheapestVec(brute state goal map [] [])))
    )
 
-  ([state goal lmg map bestRoute visited]
+  ([state goal map bestRoute visited]
    (cond
      (= (:state state) goal)
        (hash-map :route (conj bestRoute state))
 
-     (empty? (removeBeenValues (lmg map state) visited))
+     (empty? (removeBeenValues (LMG map state) visited))
        false
 
      :else
        (flatten
          (remove false?
-           (for [currentState (removeBeenValues (lmg map state) visited)]
+           (for [currentState (removeBeenValues (LMG map state) visited)]
              (brute
                currentState
                goal
-               lmg
                map
                (conj bestRoute state)
                (conj visited (:state currentState)))))))))
 
 
-;; (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
-;; (time (brute {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
+;; (brute {:state "newcastle" :cost 0} "chester" busRoutes00)
+;; (time (brute {:state "newcastle" :cost 0} "chester" busRoutes00))

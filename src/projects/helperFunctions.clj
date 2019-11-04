@@ -1,6 +1,6 @@
 (ns projects.helperFunctions)
 
-(defn bestFirstLMG [map state]
+(defn LMG [map state]
   "this function returns all possible routes that the user/machine can take from its current location."
   (let [location (:state state)
         cost (:cost state)]

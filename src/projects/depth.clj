@@ -11,7 +11,7 @@
 
 (defn depth-firstSearch
   "to be written"
-  ([state goal lmg map]
+  ([state goal map]
    (cond
      (not (containsLocation map goal))
        (str goal " is not a valid destination")
@@ -20,9 +20,9 @@
        (str (:state state) " is not a start location")
 
      :else
-       (depth-firstSearch state goal lmg map [] [])))
+       (depth-firstSearch state goal map [] [])))
 
-  ([state goal lmg map been finalRoute]
+  ([state goal map been finalRoute]
    (cond
      (= (:state state) goal )
        (sort-by :cost (into [] (set(conj finalRoute state))))
@@ -30,25 +30,23 @@
      (= (count (set been)) (allLocations map))
         false
 
-     (empty? (removeBeenValues (lmg map state) been))
+     (empty? (removeBeenValues (LMG map state) been))
          (depth-firstSearch
            {:state (:state (last finalRoute)) :cost (- (state :cost) (fixPrice map (:state state) (:state (last finalRoute))))}
            goal
-           lmg
            map
            (conj been (:state state))
            (into [] (butlast finalRoute)))
 
      :else
          (depth-firstSearch
-           (first (removeBeenValues (lmg map state) been))
+           (first (removeBeenValues (LMG map state) been))
            goal
-           lmg
            map
            (conj been (:state state))
            (conj finalRoute state)))))
 
 
-;;(depth-firstSearch {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
+;;(depth-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes00)
 ;;Find out Elapsed time for best-firstSearchA to run:
-;;(time (depth-firstSearch {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
+;;(time (depth-firstSearch {:state "newcastle" :cost 0} "chester" busRoutes00))

@@ -14,7 +14,7 @@
   between two locations through many locations
   with different possible costs - using the best first search algorithm"
 
-  ([state goal lmg map]
+  ([state goal map]
    (cond
      (not (containsLocation map goal))
      (str goal " is not a valid destination")
@@ -24,18 +24,17 @@
 
      :else
        (findCheapestVec
-         (dijkstra state goal lmg map (dijkstra state goal lmg map [] []) [] []))))
+         (dijkstra state goal map (dijkstra state goal map [] []) [] []))))
 
-  ([state goal lmg map been currentBest]
+  ([state goal map been currentBest]
    (cond
-     (= (:state state) goal )
+     (= (:state state) goal)
        (sort-by :cost (into [] (set (conj currentBest state))))
 
-     (empty? (removeBeenValues (lmg map state) been))
+     (empty? (removeBeenValues (LMG map state) been))
        (dijkstra
          {:state (:state (last currentBest)) :cost (- (state :cost) (fixPrice map (:state state) (:state (last currentBest))))}
          goal
-         lmg
          map
          (conj been (:state state))
          (into [] (butlast currentBest)))
@@ -45,19 +44,18 @@
 
      :else
        (dijkstra
-         (first (sort-by :cost (removeBeenValues (lmg map state) been)))
+         (first (sort-by :cost (removeBeenValues (LMG map state) been)))
          goal
-         lmg
          map
          (conj been (:state state))
          (conj currentBest state))))
 
-  ([state goal lmg map toBeat Routes visited]
+  ([state goal map toBeat Routes visited]
    (cond
      (= (:state state) goal)
        (hash-map :route (conj Routes state))
 
-     (empty? (removeBeenValues (lmg map state) visited))
+     (empty? (removeBeenValues (LMG map state) visited))
        false
 
      (> (:cost state) (:cost (last toBeat)))
@@ -66,15 +64,14 @@
      :else
      (flatten
        (remove false?
-               (for [currentState (removeBeenValues (lmg map state) visited)]
+               (for [currentState (removeBeenValues (LMG map state) visited)]
                  (dijkstra
                    currentState
                    goal
-                   lmg
                    map
                    toBeat
                    (conj Routes state)
                    (conj visited (:state currentState)))))))))
 
-;; (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00)
-;; (time (dijkstra {:state "newcastle" :cost 0} "chester" bestFirstLMG busRoutes00))
+;; (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes00)
+;; (time (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes00))
