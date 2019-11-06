@@ -43,12 +43,11 @@
                    (conj visited (:state currentState)))))))))
 
 (defn percent? [solution possibleSolutions score outOf]
-  (do (println solution (first possibleSolutions))
     (if
     (= solution (first possibleSolutions))
     (/ score outOf)
     (percent? solution (rest possibleSolutions) (+ score 1) outOf)
-    )))
+    ))
 
 (defn efficient? [solution state goal map]
   (percent? (hash-map :route solution) (efficient?_ state  goal map) 1 (count (efficient?_ state  goal map))))
