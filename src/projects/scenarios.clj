@@ -2,7 +2,7 @@
 
 ;; simple routes:
 (def busRoutes01
-  '{ :newcastle ({:location "middlesbrough" :cost 8} {:location "darlington" :cost 7} {:location "durham" :cost 6})
+  '{ :newcastle ({:location "middlesbrough" :cost 8} {:location "darlington" :cost 7} {:location "durham" :cost 6}{:location "chester" :cost 16})
     :middlesbrough ({:location "redcar" :cost 2} {:location "hartlepool" :cost 2} {:location "northallerton" :cost 3} {:location "chester" :cost 6}{:location "newcastle" :cost 5} {:location "leeds" :cost 5})
     })
 
