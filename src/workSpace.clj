@@ -14,6 +14,7 @@
 (use '[projects.brute :refer :all])
 (use '[projects.depth :refer :all])
 (use '[projects.dijkstra :refer :all])
+(use '[projects.efficiencyTest :refer :all])
 
 ;;(A*search {:state "newcastle" :cost 0} "chester" A*lmg)
 ;;(time (A*search {:state "newcastle" :cost 0} "chester" A*lmg))
@@ -29,3 +30,5 @@
 
 ;; (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes01)
 ;; (time (dijkstra {:state "newcastle" :cost 0} "chester" busRoutes01))
+
+;; (efficient? "enter algorithm here" {:state "newcastle" :cost 0} "chester" busRoutes02)
